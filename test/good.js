@@ -1,9 +1,13 @@
-angular.controller('TestGoodController');
+(function () {
 
-TestGoodController.$inject = [
-  '$scope',
-];
+  angular.controller('TestGoodController');
 
-function TestGoodController($scope) {
+  TestGoodController.$inject = [
+    '$scope',
+  ];
 
-}
+  function TestGoodController($scope) {
+
+  }
+
+}())
