@@ -1,6 +1,6 @@
 (function () {
 
-  angular.controller('TestGoodController');
+  angular.module('testModule').controller('TestGoodController');
 
   TestGoodController.$inject = [
     '$scope',

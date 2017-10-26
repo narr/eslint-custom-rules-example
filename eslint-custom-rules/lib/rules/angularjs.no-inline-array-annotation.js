@@ -15,30 +15,41 @@ module.exports = {
   create: function (context) {
     return {
       CallExpression: function (node) {
-        var dItargetArr = [
-          'controller',
-          'directive',
-          'factory',
-          'service',
-          'provider',
-          'constant',
-          'value',
-          'config',
-          'run'
-        ];
-        var callee = node.callee;
-        var calleeObject = callee.object;
-        var calleeProp = callee.property;
-        var secondArg = node.arguments[1];
+        var callee;
+        var calleeObject;
+        var calleeObjectCallee;
+        var calleeProp;
+        var dItargetArr;
+        var secondArg;
 
-        if (calleeObject && calleeObject.name === 'angular' &&
-          calleeProp && dItargetArr.indexOf(calleeProp.name) > -1 &&
-          secondArg && secondArg.type === 'ArrayExpression'
-        ) {
-          context.report(node,
-            'Don\'t use Inline Array Annotation. ' +
-            'Instead, use $inject Property Annotation.\n' +
-            'https://docs.angularjs.org/guide/di#-inject-property-annotation');
+        callee = node.callee;
+        calleeObject = callee.object;
+        if (calleeObject && calleeObject.type === 'CallExpression') {
+          calleeObjectCallee = calleeObject.callee;
+          calleeProp = callee.property;
+          dItargetArr = [
+            'controller',
+            'directive',
+            'factory',
+            'service',
+            'provider',
+            'constant',
+            'value',
+            'config',
+            'run'
+          ];
+          secondArg = node.arguments[1];
+
+          if (calleeObjectCallee.type === 'MemberExpression' &&
+            calleeObjectCallee.object.name === 'angular' &&
+            calleeObjectCallee.property.name === 'module' &&
+            calleeProp && dItargetArr.indexOf(calleeProp.name) > -1 &&
+            secondArg && secondArg.type === 'ArrayExpression') {
+            context.report(node,
+              'Don\'t use Inline Array Annotation. ' +
+              'Instead, use $inject Property Annotation.\n' +
+              'https://docs.angularjs.org/guide/di#-inject-property-annotation');
+          }
         }
       }
     };

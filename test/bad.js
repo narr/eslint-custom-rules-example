@@ -1,3 +1,3 @@
-angular.controller('TestBadController', ['$scope', function ($scope) {
+angular.module('testModule').controller('TestBadController', ['$scope', function ($scope) {
 
 }]);
