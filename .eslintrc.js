@@ -10,6 +10,7 @@ module.exports = {
   ],
   "rules": {
     "rulesdir/file-level-iife": 2,
-    "rulesdir/angularjs.no-inline-array-annotation": 2
+    "rulesdir/angularjs.no-inline-array-annotation": 2,
+    "rulesdir/angularjs.no-angular-function": 2
   }
 };
